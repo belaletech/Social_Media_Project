@@ -9,8 +9,6 @@ import java.util.List;
 
 @RestController
 public class UserController {
-
-
     @GetMapping("/users")
     public List<User> getUser()
     {
@@ -29,8 +27,6 @@ public class UserController {
         user1.setId(id);
         return user1;
     }
-
-
     @PostMapping("/users")
     public User createUser(@RequestBody User user)
     {
@@ -44,5 +40,22 @@ public class UserController {
 
         return newUser;
     }
-
+    @PutMapping("/users")
+    public User updateUser(@RequestBody User user)
+    {
+        User user1=new User(1,"code","Belal","codewithbelal@gmail.com","123456");
+        if(user.getFirstName()!=null)
+        {
+            user1.setFirstName(user.getFirstName());
+        }
+        if(user.getLastName()!=null)
+        {
+            user1.setLastName(user.getLastName());
+        }
+        if(user1.getEmail()!=null)
+        {
+            user1.setEmail(user.getEmail());
+        }
+        return user1;
+    }
 }
