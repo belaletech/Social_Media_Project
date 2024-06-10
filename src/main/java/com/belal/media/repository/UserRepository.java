@@ -10,6 +10,6 @@ import java.util.List;
 public interface UserRepository extends JpaRepository <User,Integer>{
 
     public User findByEmail(String email);
-    @Query("select u from User u where u.firstName like %:query% or u.lastName like %:query% or U.email like %:query%")
+    @Query("SELECT u FROM User u WHERE u.email LIKE %:query% OR u.firstName LIKE %:query% OR u.lastName LIKE %:query%")
     public List<User> searchUser(@Param("query") String query);
 }
