@@ -1,26 +1,65 @@
 package com.belal.media.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+import java.util.List;
 
 
+@Entity
+@Table(name="codewithbelal")
 public class User {
+    @Id
     private int id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    private String gender;
+    private List<Integer> followers;
+    private List<Integer> followings;
 
     public User()
     {
 //        Todo Auto Generated constructor stub
     }
 
-    public User(int id, String firstName, String lastName, String email, String password) {
+    public User(int id, String firstName, String lastName, String email, String password, String gender, List<Integer> followers, List<Integer> followings) {
         super();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.gender = gender;
+        this.followers = followers;
+        this.followings = followings;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public List<Integer> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<Integer> followers) {
+        this.followers = followers;
+    }
+
+    public List<Integer> getFollowings() {
+        return followings;
+    }
+
+    public void setFollowings(List<Integer> followings) {
+        this.followings = followings;
     }
 
     public int getId() {

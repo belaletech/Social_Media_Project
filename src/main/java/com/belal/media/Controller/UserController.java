@@ -2,60 +2,63 @@ package com.belal.media.Controller;
 
 
 import com.belal.media.models.User;
+import com.belal.media.repository.UserRepository;
+import com.belal.media.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController {
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    UserService userService;
+    @PostMapping("/users")
+    public User createUser(@RequestBody User user)
+    {
+        //for saving data in database
+        User savedUser=userService.registerUser(user);
+        return savedUser;
+    }
+
+
+
     @GetMapping("/users")
     public List<User> getUser()
     {
-        List<User> users=new ArrayList<>();
-        User user1=new User(1,"code","Belal","codewithbelal@gmail.com","123");
-        User user2=new User(2,"ayan","Raza","codewithraza@gmail.com","121");
-        users.add(user1);
-        users.add(user2);
+        List<User> users=userRepository.findAll();
         return users;
     }
 
     @GetMapping("/users/{userId}")
-    public User getUserById(@PathVariable("userId")Integer id)
+    public User getUserById(@PathVariable("userId")Integer id) throws Exception
     {
-        User user1=new User(1,"code","Belal","codewithbelal@gmail.com","123");
-        user1.setId(id);
-        return user1;
-    }
-    @PostMapping("/users")
-    public User createUser(@RequestBody User user)
-    {
-        User newUser=new User();
-        newUser.setId(user.getId());
-        newUser.setFirstName(user.getFirstName());
-        newUser.setLastName(user.getLastName());
-        newUser.setEmail(user.getEmail());
-        newUser.setPassword(user.getPassword());
 
 
-        return newUser;
+        return userService.findUserById(id);
     }
-    @PutMapping("/users")
-    public User updateUser(@RequestBody User user)
-    {
-        User user1=new User(1,"code","Belal","codewithbelal@gmail.com","123456");
-        if(user.getFirstName()!=null)
-        {
-            user1.setFirstName(user.getFirstName());
+
+    @PutMapping("/users/{userId}")
+    public User updateUser(@RequestBody User user, @PathVariable Integer userId) throws Exception {
+
+        return userService.updateUser(user,userId);
+    }
+
+    @DeleteMapping("users/{userId}")
+    public String deleteUser(@PathVariable("userId") Integer userId) throws Exception {
+
+        Optional<User> user=userRepository.findById(userId);
+
+        if(user.isEmpty()){
+            throw new Exception("user not exist with id"+userId);
         }
-        if(user.getLastName()!=null)
-        {
-            user1.setLastName(user.getLastName());
-        }
-        if(user1.getEmail()!=null)
-        {
-            user1.setEmail(user.getEmail());
-        }
-        return user1;
+
+        userRepository.delete(user.get());
+        return "user deleted successfully with id "+userId;
     }
 }
