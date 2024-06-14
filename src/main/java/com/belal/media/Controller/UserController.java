@@ -4,6 +4,7 @@ package com.belal.media.Controller;
 import com.belal.media.models.User;
 import com.belal.media.repository.UserRepository;
 import com.belal.media.service.UserService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,14 +40,27 @@ public class UserController {
     public User getUserById(@PathVariable("userId")Integer id) throws Exception
     {
 
-
-        return userService.findUserById(id);
+        User user= userService.findUserById(id);
+        return user;
     }
 
     @PutMapping("/users/{userId}")
     public User updateUser(@RequestBody User user, @PathVariable Integer userId) throws Exception {
 
-        return userService.updateUser(user,userId);
+        User updatedUser=userService.updateUser(user,userId);
+        return updatedUser;
+    }
+
+    @PutMapping("/users/follow/{userId1}/{userId2}")
+    public User followUserHandler(@PathVariable Integer userId1, @PathVariable Integer userId2) throws Exception {
+        User user=userService.followUser(userId1,userId2);
+        return user;
+    }
+
+    @GetMapping("/users/search")
+    public List<User>searchUser(@RequestParam("query")String query){
+        List<User>users=userService.searchUser(query);
+        return users;
     }
 
     @DeleteMapping("users/{userId}")

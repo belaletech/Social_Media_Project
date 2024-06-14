@@ -52,7 +52,9 @@ public class UserServiceImplementation implements UserService{
     @Override
     public User followUser(Integer userId1, Integer userId2) throws Exception {
         User user1=findUserById(userId1);
+
         User user2=findUserById((userId2));
+
         user2.getFollowers().add(user1.getId());
         user1.getFollowings().add(user2.getId());
         userRepository.save(user1);
@@ -90,6 +92,6 @@ public class UserServiceImplementation implements UserService{
 
     @Override
     public List<User> searchUser(String query) {
-        return null;
+        return userRepository.searchUser(query);
     }
 }
