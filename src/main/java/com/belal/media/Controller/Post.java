@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Post {
@@ -17,7 +19,32 @@ public class Post {
     private String image;
     private String video;
     private User user;
+
+    private List<User> liked=new ArrayList<>();
     private LocalDateTime createdAt;
+
+    public List<User> getLiked() {
+        return liked;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setLiked(List<User> liked) {
+        this.liked = liked;
+    }
+
+    public Post(Integer id, String caption, String image, String video, User user, List<User> liked, LocalDateTime createdAt) {
+
+        this.id = id;
+        this.caption = caption;
+        this.image = image;
+        this.video = video;
+        this.user = user;
+        this.liked = liked;
+        this.createdAt = createdAt;
+    }
 
     public Integer getId() {
         return id;
@@ -59,7 +86,7 @@ public class Post {
         this.user = user;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt(LocalDateTime now) {
         return createdAt;
     }
 
@@ -67,15 +94,6 @@ public class Post {
         this.createdAt = createdAt;
     }
 
-    public Post(Integer id, String caption, String image, String video, User user, LocalDateTime createdAt) {
-        super();
-        this.id = id;
-        this.caption = caption;
-        this.image = image;
-        this.video = video;
-        this.user = user;
-        this.createdAt = createdAt;
-    }
     public Post(){
         //TODO Auto-Generated constructor stub
     }

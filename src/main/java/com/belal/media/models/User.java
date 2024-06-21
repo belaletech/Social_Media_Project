@@ -1,5 +1,6 @@
 package com.belal.media.models;
 
+import com.belal.media.Controller.Post;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class User {
     private List<Integer> followers=new ArrayList<>();
     private List<Integer> followings=new ArrayList<>();
 
+    private List<Post>savePost=new ArrayList<>();
+
     public User()
     {
 //        Todo Auto Generated constructor stub
@@ -35,6 +38,14 @@ public class User {
         this.gender = gender;
         this.followers = followers;
         this.followings = followings;
+    }
+
+    public List<Post> getSavePost() {
+        return savePost;
+    }
+
+    public void setSavePost(List<Post> savePost) {
+        this.savePost = savePost;
     }
 
     public String getGender() {
